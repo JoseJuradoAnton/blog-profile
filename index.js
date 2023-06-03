@@ -12,10 +12,11 @@ app.use(cors());
 //Rutas
 app.use(morgan('dev'));
 app.use('/api/users', async (req, res) => {
-    res.json({
-        status: 'mensaje recibido',
-    });
+    res.send('mensaje recibido');
 });
+app.listen(process.env.PORT || 3000, () => {
+    console.log('backend running..!');
+})
 
 app.all('*', (req, res, next) => {
     const err = new Error(`Cant find ${req.originalUrl} on this server BAD URL`);
