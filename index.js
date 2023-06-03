@@ -11,11 +11,11 @@ app.use(cors());
 
 //Rutas
 app.use(morgan('production'));
-app.use('/api/users', ((req, res, next) => {
-    res.status(200).json({
+app.use('/api/users', async (req, res) => {
+    res.json({
         status: 'mensaje recibido',
     });
-}));
+});
 
 app.all('*', (req, res, next) => {
     const err = new Error(`Cant find ${req.originalUrl} on this server BAD URL`);
