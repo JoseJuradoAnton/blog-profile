@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors());
 
 //Rutas
-app.use(morgan('dev'));
+app.use(morgan('production'));
 app.use('/api/users', ((req, res, next) => {
     res.status(200).json({
         status: 'mensaje recibido',
