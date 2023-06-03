@@ -17,7 +17,3 @@ db.sync()
     .catch((error) => console.log(error)
     );
 
-const port = 3000;
-app.listen(port, () => {
-    console.log(`App on port ${port}..😃😃😃`);
-});

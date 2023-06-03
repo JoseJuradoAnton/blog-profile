@@ -14,9 +14,11 @@ app.use(morgan('dev'));
 app.use('/api/users', async (req, res) => {
     res.send('mensaje recibido');
 });
-app.listen(process.env.PORT || 3000, () => {
-    console.log('backend running..!');
-})
+
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Backend is running ${port}..😃😃😃`);
+});
 
 app.all('*', (req, res, next) => {
     const err = new Error(`Cant find ${req.originalUrl} on this server BAD URL`);
