@@ -1,10 +1,16 @@
 const express = require('express');
 const app = express();
-app.use(express.json());
 const morgan = require('morgan');
 const cors = require('cors');
 
+if (process.env.NODE_ENV !== 'production') {
+    app.use(morgan('dev'));
+}
+app.use(express.json())
+app.use(cors());
+
 //Rutas
+app.use(morgan('dev'));
 app.use('/api/users', ((req, res, next) => {
     res.status(200).json({
         status: 'mensaje recibido',
