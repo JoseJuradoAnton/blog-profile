@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { db } = require('./../database/database')['development'];
+const { db } = require('./../database/database');
 
 const User = db.define('users', {
     id: {
@@ -28,7 +28,7 @@ const User = db.define('users', {
     },
     profileImgUrl: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 'https://www.imgen.com'
     },
     status: {

@@ -3,6 +3,12 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 
+//routes
+const authRoutes = require('./src/routes/auth.route');
+
+//MANEJO DE ERRORES
+const AppError = require('./src/utils/appError');
+
 if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'));
 }
@@ -11,9 +17,7 @@ app.use(cors());
 
 //Rutas
 app.use(morgan('dev'));
-app.use('/api/users', async (req, res) => {
-    res.send('mensaje recibido');
-});
+app.use('/api/users', authRoutes);
 
 const port = 3000;
 app.listen(port, () => {
@@ -21,11 +25,19 @@ app.listen(port, () => {
 });
 
 app.all('*', (req, res, next) => {
-    const err = new Error(`Cant find ${req.originalUrl} on this server BAD URL`);
-    err.status = 'error';
-    err.statusCode = 404;
+    return next(
+        new AppError(`Can't find ${req.originalUrl} on this server`, 404)
+    );
+});
 
-    next(err);
+app.use((err, req, res, next) => {
+    err.statusCode = err.statusCode || 500;
+    err.status = err.status || 'fail';
+
+    res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+    });
 });
 
 module.exports = app;

@@ -1,17 +1,25 @@
-const { Pool } = require('pg');
-const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'admin',
-    database: 'dbcafeapp',
-    port: '5432'
-});
+const User = require('../models/user.model');
 
-const getUsers = async (req, res) => {
-    const response = await pool.query('SELECT * FROM users');
-    res.status(200).json(response.rows);
-}
+exports.findAll = async (req, res) => {
+    try {
+        const users = await User.findAll({
 
-module.exports = {
-    getUsers
-}
+        });
+
+        res.status(200).json({
+            status: 'success',
+            results: users.length,
+            users,
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            status: 'fail',
+            message: 'Something went very wrong',
+            error,
+        });
+
+    }
+};
