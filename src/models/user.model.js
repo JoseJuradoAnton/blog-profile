@@ -28,8 +28,8 @@ const User = db.define('users', {
     },
     profileImgUrl: {
         type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: 'https://www.imgen.com'
+        allowNull: false,
+        defaultValue: 'http:www.imgen.com'
     },
     status: {
         type: DataTypes.ENUM('active', 'disabled'),
