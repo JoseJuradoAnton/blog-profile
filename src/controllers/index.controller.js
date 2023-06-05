@@ -28,20 +28,7 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await User.findOne({
-            where: {
-                id,
-                status: 'active',
-            },
-        });
-
-        if (!user) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'User not found',
-            });
-        }
+        const { user } = req;
 
         return res.status(200).json({
             status: 'success',
@@ -57,3 +44,43 @@ exports.findOne = async (req, res) => {
         });
     }
 }
+exports.update = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+        const { user } = req;
+
+        await user.update({ name, email });
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'the user has been updated',
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(505).json({
+            status: 'fail',
+            message: 'Something went very wrong',
+            error,
+        })
+    }
+}
+exports.delete = async (req, res) => {
+    try {
+        const { user } = req;
+
+        await user.update({ status: 'disabled' });
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'the user has been deleted',
+        })
+    } catch (error) {
+        console.log('error');
+        return res.status(500).json({
+            status: 'success',
+            message: 'Something went very wrong',
+            error,
+        });
+    }
+};

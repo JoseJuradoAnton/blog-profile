@@ -12,7 +12,7 @@ const validFields = (req, res, next) => {
     }
     next();
 }
-
+//Create user
 exports.createUserValidation = [
     body('name').notEmpty().withMessage('Name cannot be empty'),
     body('email')
@@ -26,4 +26,16 @@ exports.createUserValidation = [
         .isLength({ min: 4 })
         .withMessage('Password Must be at least 4 characters long'),
     validFields,
+]
+//Update name and email
+exports.updateUserValidation = [
+    body('name')
+        .notEmpty()
+        .withMessage('Name cannot be empty'),
+
+    body('email')
+        .notEmpty()
+        .withMessage('Email cannot be empty')
+        .isEmail()
+        .withMessage('Must be a valid email'),
 ]
